@@ -1,8 +1,6 @@
-/**
- * @param {number} x
- * @return {boolean}
- */
-var longestCommonPrefix = function(strs) {
+let longestCommonPrefix = function (strs) {
+    if (strs.length === 0) return ''
+    if (strs.length === 1) return strs[0]
 
     let minStr = strs[0]
     let result = ''
@@ -12,15 +10,20 @@ var longestCommonPrefix = function(strs) {
         }
     }
 
-    let temp = ''
     for (let i = 0; i < minStr.length; i++) {
+        let temp = minStr[i]
+
         for (let j = 0; j < strs.length; j++) {
-            if (minStr[i] === strs[j][i] && j === strs.length - 1) {
-                result += minStr[i]
+            if (strs[j][i] === temp) {
+                temp = strs[j][i]
+            } else {
+                return result
             }
         }
+        result = result + temp
     }
     return result
+
 };
 
-//解法错误
+console.log(longestCommonPrefix(["dog", 'dg']));
