@@ -1,29 +1,46 @@
-let longestCommonPrefix = function (strs) {
-    if (strs.length === 0) return ''
-    if (strs.length === 1) return strs[0]
-
-    let minStr = strs[0]
-    let result = ''
-    for (let i = 1; i < strs.length; i++) {
-        if (minStr.length > strs[i].length) {
-            minStr = strs[i]
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt = function(s) {
+    let sum = 0
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] === 'I' && s[i + 1] === 'V') {
+            sum += 4
+            i++
+            continue
+        } else if (s[i] === 'I' && s[i + 1] === 'X') {
+            sum += 9
+            i++
+            continue
         }
-    }
-
-    for (let i = 0; i < minStr.length; i++) {
-        let temp = minStr[i]
-
-        for (let j = 0; j < strs.length; j++) {
-            if (strs[j][i] === temp) {
-                temp = strs[j][i]
-            } else {
-                return result
-            }
+        if (s[i] === 'X' && s[i + 1] === 'L') {
+            sum += 40
+            i++
+            continue
         }
-        result = result + temp
+        if (s[i] === 'X' && s[i + 1] === 'C') {
+            sum += 90
+            i++
+            continue
+        }
+        if (s[i] === 'C' && s[i + 1] === 'D') {
+            sum += 400
+            i++
+            continue
+        }
+        if (s[i] === 'C' && s[i + 1] === 'M') {
+            sum += 900
+            i++
+            continue
+        }
+        if (s[i] === 'I') sum += 1
+        if (s[i] === 'V') sum += 5
+        if (s[i] === 'X') sum += 10
+        if (s[i] === 'L') sum += 50
+        if (s[i] === 'C') sum += 100
+        if (s[i] === 'D') sum += 500
+        if (s[i] === 'M') sum += 1000
     }
-    return result
-
+    return sum
 };
-
-console.log(longestCommonPrefix(["dog", 'dg']));
