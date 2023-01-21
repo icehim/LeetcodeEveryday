@@ -1,29 +1,20 @@
-let longestCommonPrefix = function (strs) {
-    if (strs.length === 0) return ''
-    if (strs.length === 1) return strs[0]
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+let isValid = function (s) {
+    if ((s[0] === ')') || (s[0] === '}') || (s[0] === ']') || (s[s.length - 1] === '(') || (s[s.length - 1] === '{') || (s[s.length - 1] === '[')) return false
+    if (s.length % 2 === 1) return false
 
-    let minStr = strs[0]
-    let result = ''
-    for (let i = 1; i < strs.length; i++) {
-        if (minStr.length > strs[i].length) {
-            minStr = strs[i]
-        }
+    let length = s.length / 2;
+
+    for (let i = 0; i < length; i++) {
+        s = s.replace("()", "");
+        s = s.replace("{}", "");
+        s = s.replace("[]", "");
     }
 
-    for (let i = 0; i < minStr.length; i++) {
-        let temp = minStr[i]
-
-        for (let j = 0; j < strs.length; j++) {
-            if (strs[j][i] === temp) {
-                temp = strs[j][i]
-            } else {
-                return result
-            }
-        }
-        result = result + temp
-    }
-    return result
-
+    return s.length === 0;
 };
 
-console.log(longestCommonPrefix(["dog", 'dg']));
+console.log(isValid("(]"));
