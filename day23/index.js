@@ -20,4 +20,4 @@ let intersect = function (nums1, nums2) {
     }
     return res
 };
-console.log(intersect([4, 9, 5], [9, 4, 9, 8, 4]));
+console.log(intersect([4, 9, 5], [8, 4, 9, 8, 4]));
