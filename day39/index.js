@@ -37,4 +37,5 @@ let nextPermutation = function (nums) {
         R--
     }
 };
+
 nextPermutation([1, 2, 3]);
