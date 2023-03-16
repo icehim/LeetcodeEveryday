@@ -76,3 +76,48 @@ class Queue {
     }
 }
 ```
+
+## [206. 反转链表](https://leetcode.cn/problems/reverse-linked-list/)
+
+![反转链表.drawio (1)](https://cos.icehim.com/typora/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8.drawio%20(1).svg)
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ * 分析测试用例
+ * 1.确定好一个链表的头节点
+ * 2.输入一个反转后的链表
+ *
+ * 算法原理
+ * 1.递归遍历链表
+ * 2.遍历的过程中反转next指针
+ *
+ * 算法流程
+ * 1.创建两个变量，一个是未反转的链表指针，另一个时反转后的链表
+ * 2.递归遍历未反转的链表
+ * 3.修改next指针，并且当前链表指针向前继续遍历，直到next等于null
+ *
+ */
+
+var reverseList = function(head) {
+    let cur = head
+    let prev = null
+    while (cur){
+        const temp = cur.next
+        cur.next = prev
+        prev = cur
+        cur = temp
+    }
+    return  prev
+};
+console.log(reverseList([1, 2, 3, 4, 5]));
+```
+
