@@ -279,3 +279,101 @@ var postorderTraversal = function(root) {
     }
 };
 ```
+
+## [102. 二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/)
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function(root) {
+    const res = []
+    set(root,0)
+    return res
+    function set(tree,count){
+        if(!tree)return
+        if(!Array.isArray(res[count])) res[count] = []
+        res[count].push(tree.val)
+        tree.left && set(tree.left,count+1)
+        tree.right && set(tree.right,count+1)
+    }
+};
+```
+
+## [700. 二叉搜索树中的搜索](https://leetcode.cn/problems/search-in-a-binary-search-tree/)
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} val
+ * @return {TreeNode}
+ */
+var searchBST = function(root, val) {
+    if(val < root.val){
+        return root.left? searchBST(root.left,val) : null
+    }
+    if(val > root.val){
+        return root.right? searchBST(root.right,val) : null
+    }
+    if(val===root.val){
+        return root
+    }
+};
+```
+
+## [701. 二叉搜索树中的插入操作](https://leetcode.cn/problems/insert-into-a-binary-search-tree/)
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} val
+ * @return {TreeNode}
+ */
+var insertIntoBST = function(root, val) {
+    if(root===null) return new TreeNode(val)
+    return searchBST(root,val)
+    function searchBST(tree,val){
+        if(val < tree.val){ 
+            if(tree.left){
+                searchBST(tree.left,val)
+            }else{
+                tree.left = new TreeNode(val)
+            }
+        }
+        if(val > tree.val){
+            if(tree.right){
+                searchBST(tree.right,val)
+            }else{
+                tree.right = new TreeNode(val)
+            }
+        }
+        return tree
+    }
+};
+```
+
