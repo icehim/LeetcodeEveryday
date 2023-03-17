@@ -377,3 +377,122 @@ var insertIntoBST = function(root, val) {
 };
 ```
 
+## [208. 实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/)
+
+```javascript
+// 算法原理
+// 实现TridNode
+// 插入操作
+// 1.字符串切割,并且逐步插入每个字母
+// 2.可以预设好插入的位置(声明一个26项的数组),并且在当前位置插入新节点
+// 搜索操作
+// 1.字符串的切割，并且逐步查找每个字母
+// 2.判断是否还有子节点
+// 3.给每个节点预设结束的标记位
+// 前缀查询操作
+// 1.字符串的切割，并且逐步查找每个字母
+// 2.判断是否还有子节点
+// 3.对单词结束位进行判定
+
+// 算法流程
+// 插入操作
+// 1.遍历每个字符
+// 2.计算当前字符的索引位置，以0为起始点，charCodeAt
+// 3.如果当前字符的索引位置没有值，就在当前位置创建一个新节点，并且插入到当前位置
+// 4.如果对应的索引位置有值，则继续遍历下一个字母
+// 5.最后要设定结束标记位
+
+// 搜索操作
+// 1.遍历每个字符
+// 2.计算当前字符的索引位置，以0为起始点，charCodeAt
+// 3.如果对应的索引位置没有值，代表没有需要搜索的字符串，直接返回0
+// 4.如果对应的索引位置有值，则继续遍历一个字母
+// 5.返回结束标记位
+
+// 前缀查询操作
+// 1.遍历每个字符
+// 2.计算当前字符的索引位置，以0为起始点，charCodeAt
+// 3.如果对应的索引位置没有值，代表没有需要搜索的字符串，直接返回0
+// 4.如果对应的索引位置有值，则继续遍历一个字母
+// 5.返回true
+
+class TrieNode{
+    constructor(){
+        // 存储字母的容器
+        // .fill(null)填充数组
+        this.next = new Array(26).fill(null)
+        // 代表当前节点的结束位置
+        this.end = 0
+        // 代表当前接单的层级信息
+        this.path = 0
+    }
+}
+var Trie = function() {
+    // 根节点，代表空字符串
+    this.root = new TrieNode();
+};
+
+/** 
+ * @param {string} word
+ * @return {void}
+ */
+Trie.prototype.insert = function(word) {
+    if(!word) return
+    let node = this.root
+    for(let i = 0;i<word.length;i++){
+        // 获取每个字符对应的索引
+        let index = word[i].charCodeAt() - 'a'.charCodeAt()
+        if(!node.next[index]){
+            node.next[index] = new TrieNode()
+        }
+        node.path+=1
+        node = node.next[index]
+    }
+    node.end +=1
+};
+
+/** 
+ * @param {string} word
+ * @return {boolean}
+ */
+Trie.prototype.search = function(word) {
+    if(!word) return
+    let node = this.root
+    for(let i = 0;i<word.length;i++){
+        // 获取每个字符对应的索引
+        let index = word[i].charCodeAt() - 'a'.charCodeAt()
+        if(!node.next[index]){
+            return 0;
+        }
+        node = node.next[index]
+    }
+    return node.end;
+};
+
+/** 
+ * @param {string} prefix
+ * @return {boolean}
+ */
+Trie.prototype.startsWith = function(prefix) {
+    if(!prefix) return
+    let node = this.root
+    for(let i = 0;i<prefix.length;i++){
+        // 获取每个字符对应的索引
+        let index = prefix[i].charCodeAt() - 'a'.charCodeAt()
+        if(!node.next[index]){
+            return 0;
+        }
+        node = node.next[index]
+    }
+    return true;
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * var obj = new Trie()
+ * obj.insert(word)
+ * var param_2 = obj.search(word)
+ * var param_3 = obj.startsWith(prefix)
+ */
+```
+
