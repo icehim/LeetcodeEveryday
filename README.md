@@ -121,3 +121,161 @@ var reverseList = function(head) {
 console.log(reverseList([1, 2, 3, 4, 5]));
 ```
 
+## [144. 二叉树的前序遍历](https://leetcode.cn/problems/binary-tree-preorder-traversal/)
+
+递归
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var preorderTraversal = function(root) {
+    const res = []
+    set(root)
+    return res
+    function set(tree) {
+        //判断根节点是否存在
+        if (!tree) return
+        //将根节点的值添加到res
+        res.push(tree.val)
+        //判断、递归左节点
+        tree.left && set(tree.left)
+        //判断、递归右节点
+        tree.right && set(tree.right)
+    }
+};
+```
+
+迭代
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+class Stack {
+    constructor() {
+        this.stack = []
+    }
+
+    push(item) {
+        return this.stack.push(item)
+    }
+
+    pop() {
+        return this.stack.pop()//移除并返回最后一个元素
+    }
+
+    peek() {
+        return this.stack[this.getSize() - 1]
+    }
+
+    getSize() {
+        return this.stack.length
+    }
+
+    isEmpty() {
+        return this.getSize() === 0;
+    }
+}
+var preorderTraversal = function(root) {
+    //创建一个栈
+    let myStack = new Stack()
+    let arr = []
+    //根节点放入栈中
+    root && myStack.push(root)
+    //迭代
+    while (!myStack.isEmpty()){
+        //出栈
+        let cur = myStack.pop()
+        //将出栈的节点值添加到arr中
+        arr.push(cur.val)
+        //判断右节点是否存在
+        cur.right && myStack.push(cur.right)
+        //判断左节点是否存在
+        cur.left && myStack.push(cur.left)
+    }
+    return arr
+};
+```
+
+## [94. 二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function(root) {
+    const res = []
+    set(root)
+    return res
+    function set(tree) {
+        //判断根节点是否存在
+        if (!tree) return
+        //判断、递归左节点
+        tree.left && set(tree.left)
+        //将根节点的值添加到res
+        res.push(tree.val)
+        //判断、递归右节点
+        tree.right && set(tree.right)
+    }
+}
+```
+
+## [145. 二叉树的后序遍历](https://leetcode.cn/problems/binary-tree-postorder-traversal/)
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var postorderTraversal = function(root) {
+    const res = []
+    set(root)
+    return res
+    function set(tree) {
+        //判断根节点是否存在
+        if (!tree) return
+        //判断、递归左节点
+        tree.left && set(tree.left)
+        //判断、递归右节点
+        tree.right && set(tree.right)
+        //将根节点的值添加到res
+        res.push(tree.val)
+    }
+};
+```
