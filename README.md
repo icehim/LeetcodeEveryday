@@ -538,3 +538,45 @@ var integerBreak = function (n) {
 };
 ```
 
+## [17. 电话号码的字母组合](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/)
+
+```javascript
+/**
+ * @param {string} digits
+ * @return {string[]}
+ */
+
+var data = {
+    '2': 'abc',
+    '3': 'def',
+    '4': 'ghi',
+    '5': 'jkl',
+    '6': 'mno',
+    '7': 'pqrs',
+    '8': 'tuv',
+    '9': 'wxyz',
+}
+let arr = []
+
+function phoneNumber(digits, index, res) {
+    //想对digits进行遍历，但是不能使用for循环
+    if (index > digits.length - 1) {
+        arr.push(res)
+        return
+    }
+
+    let letterStr = data[digits[index] + '']
+    for (let i = 0; i < letterStr.length; i++) {
+        // 在循环里面进行递归
+        // 保存结果
+        phoneNumber(digits, index + 1, res + letterStr[i])
+    }
+}
+
+var letterCombinations = function(digits) {
+    if(digits.length===0) return []
+    arr = []
+    phoneNumber(digits, 0, '')
+    return arr
+};
+```
