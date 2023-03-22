@@ -496,3 +496,45 @@ Trie.prototype.startsWith = function(prefix) {
  */
 ```
 
+## [70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/)
+
+```javascript
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var memo = {}
+var climbStairs = function (n) {
+
+// 递归的退出条件
+    memo[0] = 1
+    memo[1] = 1
+
+    for (let i = 2; i <= n; i++) {
+        memo[i] = memo[i - 2] + memo[i - 1]
+    }
+    return memo[n]
+};
+```
+
+## [343. 整数拆分](https://leetcode.cn/problems/integer-break/)
+
+```javascript
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var memo = {}
+var integerBreak = function (n) {
+    memo[1] = 1
+    for (let i = 2; i <= n; i++) {
+        //自下而上的递推
+        // 4 1+3 2+2 3+3
+        for (let j = 1; j <= i - 1; j++) {
+            memo[i] = Math.max(memo[i] || 1, j * (i - j), j * memo[i - j]);
+        }
+    }
+    return memo[n]
+};
+```
+
