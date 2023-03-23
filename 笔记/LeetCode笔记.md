@@ -1,5 +1,650 @@
 # LeetCode笔记
 
+## [1. 两数之和](https://leetcode.cn/problems/two-sum/)
+
+```javascript
+//时间复杂度O(n²)
+// var twoSum = function(nums, target) {
+//     var arr = []
+//     for(let i=0;i<nums.length;i++){
+//         for(let j=i+1;j<nums.length;j++){
+//             if(nums[i]+nums[j]===target){
+//                 arr = [i,j]
+//             }
+//         }
+//         if(arr.length===2) break
+//     }
+//     return arr
+// };
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ * 时间复杂度O(n)
+ */
+var twoSum = function (nums, target) {
+    //用对象存储数字出现的位置
+    const data = {}
+
+    for (let i = 0; i < nums.length; i++) {
+        //获取目标值的索引
+        let targetNumIndex = data[target - nums[i]]
+        if (targetNumIndex !== undefined) {
+            return [i, targetNumIndex]
+        } else {
+            data[nums[i]] = i
+        }
+    }
+};
+```
+
+## [9. 回文数](https://leetcode.cn/problems/palindrome-number/)
+
+```javascript
+/**
+ * @param {number} x
+ * @return {boolean}
+ */
+var isPalindrome = function (x) {
+    x = x.toString()
+    if (x.length % 2 === 0) {
+        for (let i = 0; i < x.length / 2; i++) {
+            if (x[i] !== x[x.length - 1 - i]) {
+                return false
+            }
+        }
+        return true
+    } else {
+        for (let i = 0; i < (x.length / 2) - 1; i++) {
+            if (x[i] !== x[x.length - 1 - i]) {
+                return false
+            }
+        }
+        return true
+    }
+};
+
+```
+
+## [13. 罗马数字转整数](https://leetcode.cn/problems/roman-to-integer/)
+
+```javascript
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt = function (s) {
+    let sum = 0
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] === 'I' && s[i + 1] === 'V') {
+            sum += 4
+            i++
+            continue
+        } else if (s[i] === 'I' && s[i + 1] === 'X') {
+            sum += 9
+            i++
+            continue
+        }
+        if (s[i] === 'X' && s[i + 1] === 'L') {
+            sum += 40
+            i++
+            continue
+        }
+        if (s[i] === 'X' && s[i + 1] === 'C') {
+            sum += 90
+            i++
+            continue
+        }
+        if (s[i] === 'C' && s[i + 1] === 'D') {
+            sum += 400
+            i++
+            continue
+        }
+        if (s[i] === 'C' && s[i + 1] === 'M') {
+            sum += 900
+            i++
+            continue
+        }
+        if (s[i] === 'I') sum += 1
+        if (s[i] === 'V') sum += 5
+        if (s[i] === 'X') sum += 10
+        if (s[i] === 'L') sum += 50
+        if (s[i] === 'C') sum += 100
+        if (s[i] === 'D') sum += 500
+        if (s[i] === 'M') sum += 1000
+    }
+    return sum
+};
+```
+
+## [14. 最长公共前缀](https://leetcode.cn/problems/longest-common-prefix/)
+
+```javascript
+let longestCommonPrefix = function (strs) {
+    if (strs.length === 0) return ''
+    if (strs.length === 1) return strs[0]
+
+    let minStr = strs[0]
+    let result = ''
+    for (let i = 1; i < strs.length; i++) {
+        if (minStr.length > strs[i].length) {
+            minStr = strs[i]
+        }
+    }
+
+    for (let i = 0; i < minStr.length; i++) {
+        let temp = minStr[i]
+
+        for (let j = 0; j < strs.length; j++) {
+            if (strs[j][i] === temp) {
+                temp = strs[j][i]
+            } else {
+                return result
+            }
+        }
+        result = result + temp
+    }
+    return result
+
+};
+
+console.log(longestCommonPrefix(["dog", 'dg']));
+```
+
+## [20. 有效的括号](https://leetcode.cn/problems/valid-parentheses/)
+
+```javascript
+/**
+ * @param {string} s
+ * @return {boolean}
+ * 分析测试用例
+ * 1.字符串固定
+ * 2.成对出现
+ * 3.闭合顺序 (最后出现的括号第一个闭合)=》最先出现的括号最后一个闭合
+ *
+ * 解题思路
+ * 算法原理：
+ * 1.用栈来模拟括号的顺序
+ * 2.可以创建一个对象，建立左右括号的对应关系，key是左括号，value是右括号
+ *
+ * 算法流程
+ * 1.遍历字符串的每一个字符
+ * 2.如果是左括号、入栈
+ * 3.如果是右括号，判断栈顶的元素和当前右括号是否对应？如果不对应，就return false，如果对应栈顶元素出栈
+ * 4.遍历后保证栈内元素的size 为空
+ */
+
+let isValid = function (s) {
+    const Map = {
+        '{': '}',
+        '(': ')',
+        '[': ']',
+    }
+    const myStack = new Stack()
+    //for of 遍历数组的每一项值
+    for (let item of s) {
+        if (Map[item]) {
+            myStack.push(item)
+        } else {
+            console.log(myStack)
+            const last = myStack.pop()//.pop()会返回删除的元素
+            if (item !== Map[last]) return false
+        }
+    }
+    return myStack.isEmpty()
+};
+
+
+class Stack {
+    constructor() {
+        this.stack = []
+    }
+
+    push(item) {
+        return this.stack.push(item)
+    }
+
+    pop() {
+        return this.stack.pop()//移除最后一个元素
+    }
+
+    peek() {
+        return this.stack[this.getSize() - 1]
+    }
+
+    getSize() {
+        return this.stack.length
+    }
+
+    isEmpty() {
+        return this.getSize() === 0;
+    }
+}
+
+console.log(isValid('([{}])'))
+
+//第一种解法、for遍历
+// let isValid = function (s) {
+//     if ((s[0] === ')') || (s[0] === '}') || (s[0] === ']') || (s[s.length - 1] === '(') || (s[s.length - 1] === '{') || (s[s.length - 1] === '[')) return false
+//     if (s.length % 2 === 1) return false
+//
+//     let length = s.length / 2;
+//
+//     for (let i = 0; i < length; i++) {
+//         s = s.replace("()", "");
+//         s = s.replace("{}", "");
+//         s = s.replace("[]", "");
+//     }
+//
+//     return s.length === 0;
+// };
+```
+
+## [26. 删除有序数组中的重复项](https://leetcode.cn/problems/remove-duplicates-from-sorted-array/)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+
+// 比较当前元素和下一位元素是否重复，重复则删除下一位，循环位置不变，继续与下一个元素比较
+// 当前元素和下一个原属不重复，循环位置递增1，移动下一位
+let removeDuplicates = function (nums) {
+
+    let step = 0
+
+    for (let i = step; i < nums.length; i = i + step) {
+        if (nums[i] === nums[i + 1]) {
+            nums.splice(i + 1, 1)
+            step = 0
+        } else {
+            step = 1
+        }
+    }
+    return nums.length
+
+};
+console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]));
+```
+
+## [27. 移除元素](https://leetcode.cn/problems/remove-element/)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
+ */
+let removeElement = function (nums, val) {
+    let length = nums.length
+    let step = 0
+    for (let i = step; i < nums.length; i = i + step) {
+        if (nums[i] === val) {
+            nums.splice(i, 1)
+            length--
+            step = 0
+        } else step = 1
+    }
+    console.log(nums)
+    return length
+};
+console.log(removeElement([3, 2, 2, 3], 3));
+```
+
+## [35. 搜索插入位置](https://leetcode.cn/problems/search-insert-position/)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+let searchInsert = function (nums, target) {
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] === target) {
+            return i
+        } else if (nums[i] > target) {
+            // nums.splice(i, 0, target)
+            return i
+        }
+    }
+    return nums.length
+};
+console.log(searchInsert([1, 3, 5, 6], 7));
+```
+
+## [58. 最后一个单词的长度](https://leetcode.cn/problems/length-of-last-word/)
+
+```javascript
+/**
+ * @param {string} s
+ * @return {number}
+ */
+
+// 思路先以空格分割字符串=>从后往前便利=>返回数组中的非空字符串长度
+
+let lengthOfLastWord = function (s) {
+    let arr1 = s.split(' ')
+    for (let i = arr1.length - 1; i >= 0; i--) {
+        if (arr1[i].length) {
+            return arr1[i].length
+        }
+    }
+};
+
+console.log(lengthOfLastWord('luffy is still joyboy'));
+console.log(lengthOfLastWord('   fly me   to   the moon  '));
+```
+
+## [66. 加一](https://leetcode.cn/problems/plus-one/)
+
+```javascript
+/**
+ * @param {number[]} digits
+ * @return {number[]}
+ * 投机取巧一下，先用.join('')把数组转成字符串，再用'+'或者'Number()','toString()'之类方法转成数字之后+1，但是有个问题就是精度丢失!
+ * 所以用BigInt()转,然后+1n,用toString去掉BigInt的n,再用split切割字符串转为数组
+ *
+ */
+let plusOne = function (digits) {
+    return (BigInt(digits.join('')) + 1n).toString().split('');
+    // digits = digits.toString().split('')
+};
+
+console.log(plusOne([6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 5, 4, 3]));
+```
+
+## [67. 二进制求和](https://leetcode.cn/problems/add-binary/)
+
+```javascript
+/**
+ * @param {string} a
+ * @param {string} b
+ * @return {string}
+ * 给a,b字符串分别在前面加上0b代表a,b是二进制数,再用BigInt转成十进制数,a,b相加之后用toString(2)转成二进制
+ */
+let addBinary = function (a, b) {
+
+    return ((BigInt('0b' + a) + BigInt('0b' + b)).toString(2))
+};
+console.log(addBinary('1010', '1011'))
+```
+
+## [69. x 的平方根](https://leetcode.cn/problems/sqrtx/)
+
+```javascript
+/**
+ * @param {number} x
+ * @return {number}
+ *for循环暴力解
+ */
+let mySqrt = function (x) {
+    if (x === 0) return 0
+    if (x === 1) return 1
+    for (let i = 1; i <= 46341; i++) {
+        if ((i * i) > x) {
+            return i - 1
+        } else if ((i * i) === x) {
+            return i
+        }
+    }
+};
+console.log(mySqrt(9));
+```
+
+## [88. 合并两个有序数组](https://leetcode.cn/problems/merge-sorted-array/)
+
+```javascript
+/**
+ * @param {number[]} nums1
+ * @param {number} m
+ * @param {number[]} nums2
+ * @param {number} n
+ * @return {void} Do not return anything, modify nums1 in-place instead.
+ * 用splice将nums2把nums[m]~nums[m+n]的值替换，替换之后在.sort排序，数字数组排序需要传参
+ */
+let merge = function (nums1, m, nums2, n) {
+    nums1.splice(m, m + n, ...nums2)
+    nums1.sort(function (a, b) {
+        return a - b
+    })
+    console.log(nums1)
+};
+merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3);
+```
+
+## [136. 只出现一次的数字](https://leetcode.cn/problems/single-number/)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ * 利用异或运算XOR
+ * 异或运算有以下几个特点：
+ * 一个数和 0 做 XOR 运算等于本身：a⊕0 = a
+ * 一个数和其本身做 XOR 运算等于 0：a⊕a = 0
+ * XOR 运算满足交换律和结合律：a⊕b⊕a = (a⊕a)⊕b = 0⊕b = b
+ * 将nums中所有的数做异或运算最后的结果为唯一的数字
+ */
+let singleNumber = function (nums) {
+    let res = 0
+    for (const num of nums) {
+        res = res ^ num
+    }
+    return res
+};
+console.log(singleNumber([1]));
+```
+
+## [169. 多数元素](https://leetcode.cn/problems/majority-element/)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ * 思路:
+ * 先对数组进行排序，排完序之后，如果有一个数字出现的次数大于n/2,则元素位于该排序数组的n/2的位置
+ */
+const majorityElement = function (nums) {
+    if (nums.length === 1 || nums.length === 2) return nums[0]
+
+    nums.sort((a, b) => a - b)
+    return nums[Math.floor(nums.length / 2)]
+};
+console.log(majorityElement([2, 2, 1, 1, 1, 2, 2]));
+```
+
+## [171. Excel 表列序号](https://leetcode.cn/problems/excel-sheet-column-number/)
+
+```javascript
+/**
+ * @param {string} columnTitle
+ * @return {number}
+ * 思路:
+ * 1.字符转转为ascii码
+ * 2.然后对65取余+1得到A~Z对应1~26
+ * 3.然后乘以对应的26的length-1-i次幂
+ * 4.累加得到结果
+ */
+let titleToNumber = function (columnTitle) {
+    let length = columnTitle.length
+    let col = 0
+    for (let i = 0; i < length; i++) {
+        col = col + ((columnTitle[i].charCodeAt(0) % 65) + 1) * Math.pow(26, length - 1 - i)
+    }
+    return col
+};
+console.log(titleToNumber('ZY'));
+```
+
+## [217. 存在重复元素](https://leetcode.cn/problems/contains-duplicate/)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ * 解法一:双for循环遍历找是否有相同值
+ * 解法二:对数组排序，单for循环比较当前值和下一个值
+ * 解法三:用set
+ */
+let containsDuplicate = function (nums) {
+
+    // 解法一：
+    let length = nums.length
+    for (let i = 0; i < length; i++) {
+        for (let j = i + 1; j < length; j++) {
+            if (nums[j] === nums[i]) {
+                return true
+            }
+        }
+    }
+    return false
+
+    //解法二:
+    // nums.sort((a, b) => a - b)
+    // const length = nums.length
+    //
+    // for (let i = 0; i < length; i++) {
+    //     if (nums[i] === nums[i + 1]) {
+    //         return true
+    //     }
+    // }
+    // return false
+
+    //解法三:
+    // let setNum = new Set(nums)
+    // let setList = [...setNum]
+    // if (setList.length !== nums.length) {
+    //     return true
+    // } else return false
+
+    // 简化解法三
+    // return [...new Set(nums)].length < nums.length;
+
+};
+console.log(containsDuplicate([1, 2, 3, 4, 1, 2]))
+```
+
+## [219. 存在重复元素 II](https://leetcode.cn/problems/contains-duplicate-ii/)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {boolean}
+ */
+let containsNearbyDuplicate = function (nums, k) {
+    let length = nums.length
+    for (let i = 0; i < length; i++) {
+        for (let j = i + 1; j < length; j++) {
+            if (i !== j && nums[i] === nums[j] && Math.abs(i - j) <= k) {
+                return true
+            }
+        }
+    }
+    return false
+};
+
+console.log(containsNearbyDuplicate([1, 2, 3, 1, 2, 3], 2));
+```
+
+## [228 汇总区间](https://leetcode.cn/problems/summary-ranges/)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {string[]}
+ * 解题思路:从数组下表为0出发，向右遍历，当相邻元素之间的差值大于1时，就找到了一个区间。
+ * 遍历过程中，用start和end分别表示区间的起点和终点
+ * start < end 时 区间的字符串表示为 'nums[start]->nums[end]'
+ * start = end 时 区间表示为 'nums[low]'
+ */
+let summaryRanges = function (nums) {
+    const res = []
+    let i = 0;
+    const length = nums.length
+
+    while (i < length) {
+        const start = i
+        i++
+        while (i < length && nums[i - 1] + 1 === nums[i]) {
+            i++
+        }
+        const end = i - 1
+        const temp = ['' + nums[start]]
+        if (start < end) {
+            temp.push('->')
+            temp.push('' + nums[end])
+        }
+        console.log(temp)
+        res.push(temp.join(''));
+        console.log(res)
+    }
+    return res
+};
+
+console.log(summaryRanges([0, 2, 3, 4, 6, 8, 9]));
+```
+
+## [268 丢失的数字](https://leetcode.cn/problems/missing-number/)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ * 解题思路:排序看后一个数是不是比前一个数大1,是继续循环，不是返回当前循环的数+1
+ *
+ */
+let missingNumber = function (nums) {
+    let length = nums.length
+    nums.sort((a, b) => a - b)
+    if (nums[0] !== 0) return 0
+    for (let i = 0; i < length; i++) {
+        if (i + 1 !== nums[i + 1]) {
+            return i + 1
+        }
+    }
+};
+console.log(missingNumber([0]))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 346. 数据流中的移动平均值
 
 > **给定一个整数数据流和一个窗口大小，根据该滑动窗口的大小，计算其所有整数的移动平均值。**
