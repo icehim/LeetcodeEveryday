@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h4><a href='https://leetcode.cn/problems/array-partition/'>561. 数组拆分</a></h4>
+<p>难度简单325收藏分享切换为英文接收动态反馈</p>
+<p>给定长度为 <code>2n</code> 的整数数组 <code>nums</code> ，你的任务是将这些数分成 <code>n</code> 对, 例如 <code>(a1,
+    b1), (a2, b2), ..., (an, bn)</code> ，使得从 <code>1</code> 到 <code>n</code> 的 <code>min(ai, bi)</code> 总和最大。
+</p>
+<p>返回该 <strong>最大总和</strong> 。</p>
+<p></p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [1,4,3,2]
+输出：4
+解释：所有可能的分法（忽略元素顺序）为：
+1. (1, 4), (2, 3) -&gt; min(1, 4) + min(2, 3) = 1 + 2 = 3
+2. (1, 3), (2, 4) -&gt; min(1, 3) + min(2, 4) = 1 + 2 = 3
+3. (1, 2), (3, 4) -&gt; min(1, 2) + min(3, 4) = 1 + 3 = 4
+所以最大总和为 4
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [6,2,6,5,1,2]
+输出：9
+解释：最优的分法为 (2, 1), (2, 5), (6, 6). min(2, 1) + min(2, 5) + min(6, 6) = 1 + 2 + 6 = 9
+</code></pre>
+<p></p>
+<p><strong>提示：</strong></p>
+<ul>
+    <li><code>1 &lt;= n &lt;= 104</code></li>
+    <li><code>nums.length == 2 * n</code></li>
+    <li><code>-104 &lt;= nums[i] &lt;= 104</code></li>
+</ul>
+
+<script src="index.js"></script>
+</body>
+</html>
