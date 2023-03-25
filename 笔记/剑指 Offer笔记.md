@@ -410,3 +410,38 @@ var copyRandomList = function (head) {
     return res
 };
 ```
+
+## 字符串（简单）
+
+### [替换空格【*】](https://leetcode.cn/problems/ti-huan-kong-ge-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var replaceSpace = function (s) {
+    // 解法一：先以' '分割，在以'%20' 拼接
+    // return s.split(' ').join('%20')
+    // 解法二: 用replace,但是只能替换一个,所以用replaceAll替换全部
+    return s.replaceAll(' ', '%20')
+    // 解法三(有失败测试用例): 用encodeURIComponent() 函数可把字符串作为 URI 组件进行编码。
+    // 百分比编码又被称为URL编码 ' '会被转换为%20
+    // return encodeURIComponent(s)
+};
+console.log(replaceSpace('We are happy.'));
+```
+
+### [左旋转字符串](https://leetcode.cn/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {string} s
+ * @param {number} n
+ * @return {string}
+ */
+var reverseLeftWords = function (s, n) {
+    return s.slice(n) + s.slice(0, n)
+};
+console.log(reverseLeftWords('lrloseumgh', 6));
+```
