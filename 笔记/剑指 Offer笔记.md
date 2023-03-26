@@ -445,3 +445,123 @@ var reverseLeftWords = function (s, n) {
 };
 console.log(reverseLeftWords('lrloseumgh', 6));
 ```
+
+## 查找算法（简单）
+
+### [数组中重复的数字](https://leetcode.cn/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findRepeatNumber = function (nums) {
+    // 解法一:排序后遍历
+    // nums.sort((a, b) => a - b)
+    // for (let i = 1; i < nums.length; i++) {
+    //     if (nums[i - 1] === nums[i]) {
+    //         return nums[i]
+    //     }
+
+    // 解法二:哈希表
+    // 使用普通对象存number类型的属性时,js会自动对number属性进行排序,而哈希表不会
+    let map = new Map()
+    for (let num of nums) {
+        if (map.has(num)) return num
+        map.set(num, num)
+    }
+};
+
+console.log(findRepeatNumber([2, 3, 1, 0, 2, 5, 3]));
+```
+
+### [在排序数组中查找数字 I【**】](https://leetcode.cn/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ * 二分查找适用于排序后的数据
+ */
+var search = function (nums, target) {
+    let left = 0
+    let right = nums.length - 1
+    let count = 0
+
+    // 二分查找,遍历数组中下标为mid的元素,如果该元素的值为target,将mid值赋值给left,并退出循环
+    while (left <= right) {
+        let mid = (right + left) >> 1
+        if (nums[mid] === target) {
+            left = mid
+            break
+        } else if (nums[mid] < target) {
+            left = mid + 1
+        } else {
+            right = mid - 1
+        }
+    }
+    // 二分查找遍历结束后,nums[left]!==target说明没找到，返回0
+    if (nums[left] !== target) return 0
+    // 若nums[left]===target说明找到了,
+    // 此时从[0 ~ left-1] [left ~ nums.length]这两个区间中找元素值为target的元素,
+    // 如果存在,copy左移，left右移同时count+1。
+    // 移动后的新元素的值不等于target说明上一个为最后一个，因为nums为排序后的数组。
+    let copy = left - 1
+    while (copy >= 0 && nums[copy] === target) {
+        copy--
+        count++
+    }
+    while (left < nums.length && nums[left] === target) {
+        left++
+        count++
+    }
+    return count
+};
+
+console.log(search([5, 7, 7, 8, 8, 10], 8));
+```
+
+### [0～n-1中缺失的数字【*】](https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var missingNumber = function (nums) {
+
+    // 解法一:遍历,用i遍历输入,i和数组中的元素一一对应说明缺少nums.length
+    // 有不对应的地方则返回i
+    // for (let i = 0; i < nums.length; i++) {
+    //     if (nums[i] !== i) return i
+    // }
+    // return nums.length
+
+    // 解法二:二分查找
+    // let left = 0, right = nums.length - 1
+    // while (left <= right) {
+    //     let mid = (left + right) >> 1
+    //     if (nums[mid] === mid) {
+    //         left = mid + 1 //符合nums[mid] === mid 说明mid左半边正确，右半边缺失
+    //     }
+    //     if (nums[mid] > mid) {
+    //         right = mid - 1 //符合nums[mid] > mid 说明mid右半边正确，左半边缺失
+    //     }
+    //     // 不会有nums[mid] < mid的情况,那样的话数组中只能多出元素，而不是缺少
+    // }
+    // return left
+
+    // 解法三:利用哈希
+    let arr = []
+    for (let num of nums) {
+        arr[num] = num
+    }
+    if (arr[nums.length] === undefined) return nums.length
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === undefined) return i
+    }
+};
+
+console.log(missingNumber([0, 1, 2, 3, 4, 5, 6, 7, 9]));
+```
