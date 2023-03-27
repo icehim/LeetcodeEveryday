@@ -565,3 +565,133 @@ var missingNumber = function (nums) {
 
 console.log(missingNumber([0, 1, 2, 3, 4, 5, 6, 7, 9]));
 ```
+
+## 查找算法（中等）
+
+### [二维数组中的查找【*】](https://leetcode.cn/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {number[][]} matrix
+ * @param {number} target
+ * @return {boolean}
+ */
+var findNumberIn2DArray = function (matrix, target) {
+    if (!matrix.length) return false
+    // 根据二维数组建立xy坐标轴,以左下角为原点
+    let x = matrix.length - 1, y = 0
+    // 边界条件x < 0 或者y > matrix[0].length
+    while (x >= 0 && y <= matrix[0].length) {
+        if (matrix[x][y] === target) {
+            return true
+        } else if (matrix[x][y] < target) {// 当前数字小于目标值时右移
+            y++
+        } else {
+            x-- //当前数字大于目标值时上移
+        }
+    }
+    return false
+};
+
+console.log(findNumberIn2DArray([
+    [1, 4, 7, 11, 15],
+    [2, 5, 8, 12, 19],
+    [3, 6, 9, 16, 22],
+    [10, 13, 14, 17, 24],
+    [18, 21, 23, 26, 30]
+], 5));
+```
+
+### [旋转数组的最小数字【*】](https://leetcode.cn/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var minArray = function (numbers) {
+    // 解法一:
+    // 数组是被旋转了的,所以只要有数字小于numbers[0],那么他一定是最小值
+    // for (let number of numbers) {
+    //     if (number < numbers[0]) return number
+    // }
+    // return numbers[0]
+
+    // 解法二：
+    // 二分查找
+    let left = 0
+    let right = numbers.length - 1
+    while (left <= right) {
+        let mid = (left + right) >> 1
+        // numbers[mid] > numbers[right]代表最小值一定在mid右侧，left移动到mid+1位置
+        if (numbers[mid] > numbers[right]) {
+            left = mid + 1
+            // numbers[mid] < numbers[right] 代表最小值一定在mid左侧，或者就是middle的位置，将right移动到mid
+        } else if (numbers[mid] < numbers[right]) {
+            right = mid
+        } else {
+            // 如果numbers[mid]===numbers[left] || numbers[mid]===numbers[right] 此时只能right递减来找到最小值
+            right--
+        }
+    }
+    return numbers[left]
+};
+console.log(minArray([3, 3, 3, 3, 3, 3, 3, 3, 1, 3]));
+```
+
+### [第一个只出现一次的字符【*】](https://leetcode.cn/problems/di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {string} s
+ * @return {character}
+ */
+var firstUniqChar = function (s) {
+    // 解法一 调api
+    // 遍历字符串 判断当前字符串第一次出现的位置和最后一次出现的索引是否相同,相同的话不重复，不相同的话就重复
+    // for (let sElement of s) {
+    //     if (s.indexOf(sElement) === s.lastIndexOf(sElement)) return sElement
+    // }
+    // return ' '
+
+    // 解法二 哈希表
+    // let map = new Map()
+    // // 将s存入map中,
+    // for (let i = 0; i < s.length; i++) {
+    //     let curr = s.charAt(i) //返回下标位i位置的字符
+    //     // 如果curr存在的话,将map中curr所对应的值设置为false
+    //     if (map.has(curr)) {
+    //         map.set(curr, false)
+    //     } else {
+    //         // curr不存在的话设置为true
+    //         map.set(curr, true)
+    //     }
+    // }
+    // // 遍历map,第一个value值为true的元素为没有重复的
+    // for (let [key, value] of map) {
+    //     if (value) {
+    //         return key
+    //     }
+    // }
+    // return ' '
+
+    // 解法三:用队列实现
+    let map = new Map()
+    let queue = []
+    // entries()从数组中创建一个可迭代对象， 该对象包含了数组的键值对
+    for (let [i, char] of Array.from(s).entries()) {
+        if (!map.has(char)) {
+            map.set(char, i)
+            queue.push([s[i], i])
+        } else {
+            map.set(char, -1)
+            while (queue.length && map.get(queue[0][0]) === -1) {
+                queue.shift()
+            }
+        }
+    }
+    return queue.length ? queue[0][0] : ' '
+};
+
+console.log(firstUniqChar('cabac'));
+```
