@@ -734,3 +734,45 @@ var levelOrder = function (root) {
 
 ```
 
+### [从上到下打印二叉树 II【**】](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function (root) {
+    // 初始化需要返回的结果数组
+    const res = []
+    // 调用递归函数,
+    set(root, 0)
+    // 返回
+    return res
+
+    /**
+     *
+     * @param tree  需要递归的节点
+     * @param index res的下标相当于二叉树的层数,初始值为根节点从0开始
+     */
+    function set(tree, index) {
+        // 节点不存在退出函数
+        if (!tree) return
+        // 当res[index]不存在时,对其进行初始化
+        if (!Array.isArray(res[index])) res[index] = []
+        // 给res[index]添加当前节点的值
+        res[index].push(tree.val)
+        // 当前节点的左子节点存在时,优先递归,因为是子节点,所以层数index+1
+        tree.left && set(tree.left, index + 1)
+        // 右子节点存在时,接着递归
+        tree.right && set(tree.right, index + 1)
+    }
+};
+```
+
