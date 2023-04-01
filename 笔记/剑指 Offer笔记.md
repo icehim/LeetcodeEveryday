@@ -695,3 +695,42 @@ var firstUniqChar = function (s) {
 
 console.log(firstUniqChar('cabac'));
 ```
+
+## 搜索与回溯算法（简单）
+
+### [从上到下打印二叉树【*】](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+
+var levelOrder = function (root) {
+    // res用来存储结果
+    const res = []
+    if (!root) return res
+    // 声明一个队列
+    const queue = []
+    queue.push(root)
+
+    while (queue.length > 0) {
+        // 队列中的节点先进先出
+        let firstOut = queue.shift()
+        res.push(firstOut.val)
+        // 宽度优先,所以树的左子节点先进
+        firstOut.left && queue.push(firstOut.left)
+        firstOut.right && queue.push(firstOut.right)
+    }
+    return res
+};
+
+```
+
