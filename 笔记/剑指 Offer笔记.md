@@ -776,7 +776,33 @@ var levelOrder = function (root) {
 };
 ```
 
-### [从上到下打印二叉树 Ⅲ](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+### [从上到下打印二叉树 Ⅲ【*】](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function (root) {
+    const res = []
+    set(root, 0)
+    for (let i = 0; i < res.length; i++) {
+        if (i % 2 === 1) {
+            res[i].reverse()
+        }
+    }
+    return res
+
+    function set(tree, count) {
+        if (!tree) return
+        if (!Array.isArray(res[count])) res[count] = []
+        res[count].push(tree.val)
+        tree.left && set(tree.left, count + 1)
+        tree.right && set(tree.right, count + 1)
+    }
+};
+
+```
 
 ## 双指针（简单）
 
