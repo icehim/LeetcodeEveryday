@@ -776,3 +776,82 @@ var levelOrder = function (root) {
 };
 ```
 
+### [从上到下打印二叉树 Ⅲ](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+## 双指针（简单）
+
+### [18. 删除链表的节点](https://leetcode.cn/problems/shan-chu-lian-biao-de-jie-dian-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} val
+ * @return {ListNode}
+ */
+var deleteNode = function(head, val) {
+    let curr = head
+    while (curr) {
+        if (curr.val === val) {
+            return curr.next
+        }
+        if (curr.next && curr.next.val === val) {
+            curr.next = curr.next.next
+            return head
+        }
+        curr = curr.next
+    }
+};
+```
+
+### [22. 链表中倒数第k个节点【*】](https://leetcode.cn/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ * 解法一:利用哈希表
+ */
+var getKthFromEnd = function (head, k) {
+    let map = new Map
+    let count = 0
+    let curr = head
+    while (curr) {
+        map.set(count++, curr)
+        curr = curr.next
+    }
+    return map.get(count - k + 1)
+};
+
+```
+
+```typescript
+// 解法二:利用快慢指针，快指针先走k,之后快慢指针一起走，直到快指针为null
+function getKthFromEnd(head: ListNode | null, k: number): ListNode | null {
+    let quick = head, slow = head
+    let i = 0
+    while (quick) {
+        if (i >= k) {
+            slow = slow.next
+        }
+        quick = quick.next
+        i++
+    }
+    return i >= k ? slow : null
+};
+```
+
