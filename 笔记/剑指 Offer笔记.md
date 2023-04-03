@@ -881,3 +881,38 @@ function getKthFromEnd(head: ListNode | null, k: number): ListNode | null {
 };
 ```
 
+### [25. 合并两个排序的链表【**】](https://leetcode.cn/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function (l1, l2) {
+    // 需要返回结果的头节点
+    const preHead = new ListNode(-1)
+    // 需要维护的指针
+    let prev = preHead
+    while (l1 !== null && l2 !== null) {
+        if (l1.val <= l2.val) {
+            prev.next = l1
+            l1 = l1.next
+        } else {
+            prev.next = l2
+            l2 = l2.next
+        }
+        prev = prev.next
+    }
+    prev.next = l1 === null ? l2 : l1
+    return preHead.next
+};
+```
+
