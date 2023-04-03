@@ -916,3 +916,37 @@ var mergeTwoLists = function (l1, l2) {
 };
 ```
 
+### [52. 两个链表的第一个公共节点【**】](https://leetcode.cn/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/)
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+var getIntersectionNode = function (headA, headB) {
+    // 双指针法，浪漫相遇 遍历完自己的节点后 交换位置继续遍历
+    // 最后二者的总步数是一样 相遇时即为所求第一个祖先节点
+    // 两个链表长度分别为L1+C、L2+C， C为公共部分的长度，
+    // 第一个人走了L1+C步后，回到第二个人起点走L2步；
+    // 第2个人走了L2+C步后，回到第一个人起点走L1步。
+    // 当两个人走的步数都为L1+L2+C时两个人相遇
+    let node1 = headA
+    let node2 = headB
+
+    while (node1 !== node2) {
+        node1 = node1 ? node1.next : headB
+        node2 = node2 ? node2.next : headA
+    }
+    return node1
+};
+
+```
+
