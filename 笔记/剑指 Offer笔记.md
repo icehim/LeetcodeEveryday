@@ -950,3 +950,57 @@ var getIntersectionNode = function (headA, headB) {
 
 ```
 
+### [21.调整数组顺序使奇数位于偶数前面【*】](https://leetcode.cn/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof/)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ * 解法一：利用辅助数组
+ */
+var exchange = function (nums) {
+    const res = []
+    for (let num of nums) {
+        if (num % 2 === 0) {
+            res.push(num)
+        } else {
+            res.unshift(num)
+        }
+    }
+    return res
+};
+
+console.log(exchange([1, 2, 3, 4]));
+```
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ * 解法二：对2取余数后，利用sort排序
+ */
+var exchange = function (nums) {
+    return nums.sort((a, b) => b % 2 - a % 2)
+};
+
+console.log(exchange([1, 2, 3, 4]));
+```
+
+```typescript
+// 解法三：定义双指针，left从左到右寻找偶数，right从右到左寻找奇数，将找到的偶数和偶数交换位置
+// x&1 位运算 等价于 x%2 取余运算，即皆可用于判断数字奇偶性。
+function exchange(nums: number[]): number[] {
+    let left: number = 0
+    let right: number = nums.length - 1
+
+    while (left < right) {
+        while (left < right && (nums[left] & 1) === 1) left++   //遇到奇数跳过
+        while (left < right && (nums[right] & 1) === 0) right-- //遇到偶数跳过
+        let temp = nums[left]
+        nums[left] = nums[right]
+        nums[right] = temp
+    }
+    return nums
+};
+```
+
