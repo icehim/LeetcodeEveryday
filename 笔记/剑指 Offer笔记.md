@@ -804,6 +804,41 @@ var levelOrder = function (root) {
 
 ```
 
+### [26. 树的子结构【**】](https://leetcode.cn/problems/shu-de-zi-jie-gou-lcof/)
+
+```typescript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} A
+ * @param {TreeNode} B
+ * @return {boolean}
+ * 解题思路:
+ * 1.在树A找和树B的根节点值一样的节点R
+ * 2.再判断树A中以R为根节点的子树是不是包含和树B一样的结构
+ */
+var isSubStructure = function (A, B) {
+    let res = false
+    if (A && B) {
+        if (A.val === B.val) res = treeHasTreeB(A, B)
+        if (!res) res = isSubStructure(A.left, B)
+        if (!res) res = isSubStructure(A.right, B)
+    }
+    return res
+};
+const treeHasTreeB = (R, B) => {
+    if (!B) return true //B===null代表B遍历完了,说明R包含和树B一样的结构
+    if (!R) return false //R===null代表R遍历完了,但是B还没有遍历完，那B肯定不是R的子结构
+    if (R.val !== B.val) return false
+    return treeHasTreeB(R.left, B.left) && treeHasTreeB(R.right, B.right) //短路
+}
+```
+
 ## 双指针（简单）
 
 ### [18. 删除链表的节点](https://leetcode.cn/problems/shan-chu-lian-biao-de-jie-dian-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
