@@ -732,6 +732,44 @@ let merge = function (nums1, m, nums2, n) {
 merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3);
 ```
 
+## 100. 相同的树
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {boolean}
+ * 递归思路：
+ * 当两棵树的当前节点都为 null 时返回 true
+ * 当其中一个为 null 另一个不为 null 时返回 false
+ * 当两个都不为空但是值不相等时，返回 false
+ * 执行过程：
+ * 当满足终止条件时进行返回，
+ * 不满足时分别判断左子树和右子树是否相同，
+ * 其中要注意代码中的短路效应
+ */
+var isSameTree = function (p, q) {
+    if (p === null && q === null) {
+        return true
+    }
+    if (p === null || q === null) {
+        return false
+    }
+    if (p.val !== q.val) {
+        return false
+    }
+    return isSameTree(p.left, q.left) && isSameTree(p.right, q.right)
+};
+```
+
 ## [136. 只出现一次的数字](https://leetcode.cn/problems/single-number/)
 
 ```javascript
