@@ -1039,3 +1039,56 @@ function exchange(nums: number[]): number[] {
 };
 ```
 
+## 搜索与回溯算法（中等）
+
+### [12. 矩阵中的路径【**】](https://leetcode.cn/problems/ju-zhen-zhong-de-lu-jing-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {character[][]} board
+ * @param {string} word
+ * @return {boolean}
+ */
+var exist = function (board, word) {
+
+    /**
+     *
+     * @param currRow   当前行
+     * @param currColumn    当前列
+     * @param index 要匹配的当前字符
+     * @returns {*|boolean}
+     */
+    function dfs(currRow, currColumn, index) {
+        // 越界情况:超出行列 或者 行列数为负数 或者 当前行列对应的元素和word中的元素不同  的情况下返回false
+        if (currRow >= row || currRow < 0 || currColumn >= column || currColumn < 0 || board[currRow][currColumn] !== word[index]) {
+            return false
+        }
+        // 当index下标值为word的最后一个说明找到该路径了  返回true
+        if (index === word.length - 1) {
+            return true
+        }
+        // 置空当前元素表明已经被遍历过
+        board[currRow][currColumn] = ''
+        // 在置空当前元素的情况下继续递归,该元素的上下左右元素看是否有满足于单词的路径，只要有一个满足就行。
+        let res = dfs(currRow - 1, currColumn, index + 1) || dfs(currRow + 1, currColumn, index + 1) || dfs(currRow, currColumn - 1, index + 1) || dfs(currRow, currColumn + 1, index + 1)
+        // 递归完成之后，将符合条件的字符变回来，以便后续遍历无误
+        board[currRow][currColumn] = word[index]
+        return res
+    }
+
+    // 行数
+    let row = board.length
+    // 列数
+    let column = board[0].length
+    // 遍历board中每个元素
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < column; j++) {
+            if (dfs(i, j, 0)) {
+                return true
+            }
+        }
+    }
+    return false
+};
+```
+
