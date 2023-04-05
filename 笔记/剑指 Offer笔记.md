@@ -1092,3 +1092,44 @@ var exist = function (board, word) {
 };
 ```
 
+### [机器人的运动范围【**】](https://leetcode.cn/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {number} m
+ * @param {number} n
+ * @param {number} k
+ * @return {number}
+ */
+var movingCount = function (m, n, k) {
+    // visited用来记录走过的格子，避免重复，初始化二维数组，初始值都为false，默认都没走过。
+    const visited = Array(m).fill(0).map(_ => Array(n).fill(false));
+
+    // 用来计算位数和
+    function sum(n) {
+        let res = 0
+        while (n) {
+            res += n % 10
+            n = Math.floor(n / 10)
+        }
+        return res
+    }
+
+    // dfs
+    function dfs(x, y) {
+        // 边界条件，位数和大于k  不能移动到方格外    不能重复
+        if (sum(x) + sum(y) > k || x >= m || y >= n || visited[x][y]) {
+            return 0
+        } else {
+            // 走过的格子设置为true
+            visited[x][y] = true
+            // 记录当前格子已经走过，返回当前计数 1 + 后续其他两个方向的总和
+            return 1 + dfs(x + 1, y) + dfs(x, y + 1)
+        }
+    }
+
+    return dfs(0, 0)
+};
+console.log(movingCount(2, 3, 2));
+```
+
