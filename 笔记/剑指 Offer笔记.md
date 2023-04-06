@@ -1179,3 +1179,51 @@ var pathSum = function (root, target) {
 };
 ```
 
+## [36. 二叉搜索树与双向链表【*】](https://leetcode.cn/problems/er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * // Definition for a Node.
+ * function Node(val,left,right) {
+ *    this.val = val;
+ *    this.left = left;
+ *    this.right = right;
+ * };
+ */
+/**
+ * @param {Node} root
+ * @return {Node}
+ * 解题思路:中序遍历+递归
+ *  二叉搜索数经过中序遍历后会得到一个递增的序列满足链表的排序条件
+ */
+var treeToDoublyList = function (root) {
+    function dfs(node) {
+        if (!node) return node
+        // 中序遍历的顺序：左根右
+        dfs(node.left)
+        // 当pre===null的时候说明,指向最小的叶子节点，也就是链表的头节点，将head指向它.
+        // 当pre!==null的时候,将pre.right指向当前节点
+        pre !== null ? pre.right = node : head = node
+        // 将当前节点的left指向pre节点
+        node.left = pre
+        // 移动pre节点
+        pre = node
+
+        dfs(node.right)
+    }
+
+    if (!root) return root
+    // 返回链表的头节点
+    let head = null
+    // 需要维护的当前节点
+    let pre = head
+
+    dfs(root)
+    // 中序遍历完成后,pre只想最后一个链表节点，将head.left点指向尾节点
+    head.left = pre
+    // 将尾节点pre.right 指向头节点
+    pre.right = head
+    return head
+};
+```
+
