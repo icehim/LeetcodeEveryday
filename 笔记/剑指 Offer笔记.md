@@ -1133,3 +1133,49 @@ var movingCount = function (m, n, k) {
 console.log(movingCount(2, 3, 2));
 ```
 
+### [34.二叉树中和为某一值的路径【**】](https://leetcode.cn/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} target
+ * @return {number[][]}
+ */
+var pathSum = function (root, target) {
+    let res = []
+    if (!root) return res
+
+    /**
+     *
+     * @param node  递归的节点
+     * @param target    经过递归后当前节点值和目标值的差值
+     * @param paths 节点添加到路径
+     */
+    function dfs(node, target, paths) {
+        paths.push(node.val)
+        // 当前节点没有子节点并且当前节点的值等于差值结束递归
+        if (!node.left && !node.right && node.val === target) {
+            res.push(paths)
+        }
+        // path.slice()数组的浅拷贝，供下一次递归使用，每次递归都要减去当前值
+        if (node.left) {
+            dfs(node.left, target - node.val, paths.slice())
+        }
+        if (node.right) {
+            dfs(node.right, target - node.val, paths.slice())
+        }
+    }
+
+    dfs(root, target, [])
+    return res
+};
+```
+
