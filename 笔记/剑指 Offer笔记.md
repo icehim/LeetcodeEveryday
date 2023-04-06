@@ -1179,7 +1179,7 @@ var pathSum = function (root, target) {
 };
 ```
 
-## [36. 二叉搜索树与双向链表【*】](https://leetcode.cn/problems/er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+### [36. 二叉搜索树与双向链表【*】](https://leetcode.cn/problems/er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
 
 ```javascript
 /**
