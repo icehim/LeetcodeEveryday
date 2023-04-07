@@ -1227,3 +1227,58 @@ var treeToDoublyList = function (root) {
 };
 ```
 
+## 排序（简单）
+
+### [把数组排成最小的数【**】](https://leetcode.cn/problems/ba-shu-zu-pai-cheng-zui-xiao-de-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {string}
+ * 解题思路：
+ * 用a+b与b+a来比较大小排序
+ * 将数组转为字符串
+ *
+ * 例如3+30=330  '>'  30+3=303
+ *
+ */
+var minNumber = function (nums) {
+    return nums.sort((a, b) => `${a}${b}` - `${b}${a}`).join("");
+};
+console.log(minNumber([3, 30, 34, 5, 9]));
+
+console.log('330' - '303')
+```
+
+### [61. 扑克牌中的顺子【**】](https://leetcode.cn/problems/bu-ke-pai-zhong-de-shun-zi-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ * 解题思路:
+ * 满足5张牌是顺子的条件：
+ * 1.   5张牌无重复(大小王除外)
+ * 2.   最大牌 - 最小牌 < 5 (大小王除外)
+ */
+var isStraight = function (nums) {
+    // 记录大小王牌的数量
+    let joker = 0
+    // 对nums进行排序
+    nums.sort((a, b) => a - b)
+    for (let i = 0; i < nums.length; i++) {
+        // 如果是大小王牌则joker+1
+        if (nums[i] === 0) {
+            joker++
+            // 如果不是大小王牌，当前牌和下一张牌相同时重复，不满足顺子条件返回false
+        } else if (nums[i] === nums[i + 1]) {
+            return false
+        }
+    }
+    // 计算最大牌和最小牌的差值看是否满足条件
+    return nums[4] - nums[joker] < 5
+};
+
+isStraight([0, 0, 1, 5, 2])
+```
+
