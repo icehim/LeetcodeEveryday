@@ -1282,3 +1282,10 @@ var isStraight = function (nums) {
 isStraight([0, 0, 1, 5, 2])
 ```
 
+## 排序（中等）
+
+> 用api解的题，需要自己写排序算法实现
+
+[剑指 Offer 40. 最小的k个数](https://leetcode.cn/problems/zui-xiao-de-kge-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+[剑指 Offer 41. 数据流中的中位数](https://leetcode.cn/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
