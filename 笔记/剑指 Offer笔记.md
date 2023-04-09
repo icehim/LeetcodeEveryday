@@ -1289,3 +1289,45 @@ isStraight([0, 0, 1, 5, 2])
 [剑指 Offer 40. 最小的k个数](https://leetcode.cn/problems/zui-xiao-de-kge-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
 
 [剑指 Offer 41. 数据流中的中位数](https://leetcode.cn/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+## 搜索与回溯算法（中等）
+
+> 经典题多种解法
+
+[剑指 Offer 55 - I. 二叉树的深度](https://leetcode.cn/problems/er-cha-shu-de-shen-du-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+[剑指 Offer 55 - II. 平衡二叉树](https://leetcode.cn/problems/ping-heng-er-cha-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ * 解题思路：
+ * 只计算一次最大深度，计算的过程中在后序遍历位置顺便判断二叉树是否平衡：
+ * 对于每个节点，先算出来左右子树的最大高度，然后在后序遍历的位置根据左右子树的最大高度判断平衡性。
+ */
+var isBalanced = function (root) {
+    let res = true
+
+    function dfs(tree) {
+        if (!tree) return 0
+        const left = dfs(tree.left)
+        const right = dfs(tree.right)
+        if (Math.abs(left - right) > 1) {
+            res = false
+        }
+        return 1 + Math.max(left, right)
+    }
+
+    dfs(root)
+    return res
+};
+```
+
