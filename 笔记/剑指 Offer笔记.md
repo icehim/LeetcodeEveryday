@@ -1345,3 +1345,47 @@ var sumNums = function (n) {
 };
 ```
 
+### [剑指 Offer 68 - I. 二叉搜索树的最近公共祖先](https://leetcode.cn/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/)
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ * 解题思路：利用二叉搜索树的特点
+ * 首先判断 p 和 q 是否相等，若相等，则直接返回 p 或 q 中的任意一个，程序结束
+ * 若不相等，则判断 p 和 q 在向左还是向右的问题上，是否达成了一致
+ * 如果 p 和 q 都小于root, 哥俩一致认为向左👈，则 root = root.left
+ * 如果 p 和 q 都大于root, 哥俩一致认为向右👉，则 root = root.right
+ * 如果 p 和 q 哥俩对下一步的路线出现了分歧，说明 p 和 q 在当前的节点上就要分道扬镳了，当前的 root 是哥俩临别前一起走的最后一站
+ * 返回root
+ */
+function TreeNode(val) {
+    this.val = val;
+    this.left = this.right = null;
+}
+
+var lowestCommonAncestor = function (root, p, q) {
+    if (!root) return null
+    if (p.val === q.val) return p
+
+    while (root) {
+        if (p.val > root.val && q.val > root.val) {
+            root = root.right
+        } else if (p.val < root.val && q.val < root.val) {
+            root = root.left
+        } else {
+            return root
+        }
+    }
+};
+```
+
