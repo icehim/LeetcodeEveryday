@@ -1389,3 +1389,36 @@ var lowestCommonAncestor = function (root, p, q) {
 };
 ```
 
+### [剑指 Offer 68 - II. 二叉树的最近公共祖先](https://leetcode.cn/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/)
+
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function (root, p, q) {
+    if (!root) return null
+    // 当前节点等于p或者q，那么当前节点是公共祖先
+    if (root === p || root === q) return root
+    // 向左子数寻找和p、q相同的节点
+    const left = lowestCommonAncestor(root.left, p, q)
+    // 向右子树寻找和p、q相同的节点
+    const right = lowestCommonAncestor(root.right, p, q)
+    // 如果左右都分别找到一个，那么当前根节点就是最近公共祖先
+    if (left && right) return root
+    // 如果左边找到，那么最近公共祖先在左边
+    if (left) return left
+    // 如果右边找到，那么最近公共祖先在右边
+    if (right) return right
+};
+```
+
