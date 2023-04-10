@@ -1286,17 +1286,17 @@ isStraight([0, 0, 1, 5, 2])
 
 > 用api解的题，需要自己写排序算法实现
 
-[剑指 Offer 40. 最小的k个数](https://leetcode.cn/problems/zui-xiao-de-kge-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+### [剑指 Offer 40. 最小的k个数](https://leetcode.cn/problems/zui-xiao-de-kge-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
 
-[剑指 Offer 41. 数据流中的中位数](https://leetcode.cn/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+### [剑指 Offer 41. 数据流中的中位数](https://leetcode.cn/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
 
 ## 搜索与回溯算法（中等）
 
 > 经典题多种解法
 
-[剑指 Offer 55 - I. 二叉树的深度](https://leetcode.cn/problems/er-cha-shu-de-shen-du-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+### [剑指 Offer 55 - I. 二叉树的深度](https://leetcode.cn/problems/er-cha-shu-de-shen-du-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
 
-[剑指 Offer 55 - II. 平衡二叉树](https://leetcode.cn/problems/ping-heng-er-cha-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+### [剑指 Offer 55 - II. 平衡二叉树](https://leetcode.cn/problems/ping-heng-er-cha-shu-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
 
 ```javascript
 /**
@@ -1328,6 +1328,20 @@ var isBalanced = function (root) {
 
     dfs(root)
     return res
+};
+```
+
+### [剑指 Offer 64. 求1+2+…+n](https://leetcode.cn/problems/qiu-12n-lcof/?envType=study-plan&id=lcof&plan=lcof&plan_progress=xxixi0ot)
+
+```javascript
+/**
+ * @param {number} n
+ * @return {number}
+ * 解题思路：用 && 的短路效应来判断递归结束
+ */
+let res = 0
+var sumNums = function (n) {
+    return n && n + sumNums(n - 1)
 };
 ```
 
